@@ -1,0 +1,4 @@
+Django==3.2
+django-redis==4.12.1
+celery
+pycryptodome

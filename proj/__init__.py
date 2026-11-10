@@ -1,8 +1,9 @@
 from django.utils.deprecation import MiddlewareMixin
 from django.http.response import JsonResponse, HttpResponse, StreamingHttpResponse
 from functools import wraps
-import logging, time
-from mysite.celery import app as celery_app
+import logging
+import time
+from proj.celery import app as celery_app
 
 
 class ViewsMiddleware(MiddlewareMixin):
@@ -24,7 +25,8 @@ class ViewsMiddleware(MiddlewareMixin):
     def process_exception(self, request, exception):
         # 视图函数发生异常时调用
         logging.exception(exception)
-        return JsonResponse({'code': 0, 'message': exception})
+        code = exception.args[1] if isinstance(exception.args, tuple) else 1
+        return JsonResponse({'code': code, 'message': exception})
 
 
 def login_exempt(view_func):

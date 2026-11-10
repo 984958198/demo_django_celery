@@ -6,9 +6,9 @@ Django示例框架
 
     2.安装该框架所有库requirements.txt内容
 
-    3.命令行下执行：python manage.py runserver --settings=mysite.settings
+    3.命令行下执行：python manage.py runserver --settings=proj.settings
 
     4.启动celery：
-        celery -A mysite worker --loglevel=info --pool=solo
+        celery -A proj worker --loglevel=info --pool=solo
 
-        celery -A mysite beat --loglevel=info
+        celery -A proj beat --loglevel=info

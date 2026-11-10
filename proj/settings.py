@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -27,7 +26,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mysite'
+    'demoapp',
 ]
 
 MIDDLEWARE = [
@@ -48,10 +46,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'mysite.ViewsMiddleware',  # 自定义中间件
+    'proj.ViewsMiddleware',  # 自定义中间件
 ]
 
-ROOT_URLCONF = 'mysite.urls'
+ROOT_URLCONF = 'proj.urls'
 
 TEMPLATES = [
     {
@@ -69,12 +67,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mysite.wsgi.application'
+WSGI_APPLICATION = 'proj.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+# 数据库
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -82,7 +77,7 @@ DATABASES = {
     }
 }
 
-#日志
+# 日志
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -116,7 +111,7 @@ LOGGING = {
             'handlers': ['mail_admins', 'console'],
             'level': 'INFO',
         },
-        #打印sql
+        # 打印sql
         # 'django.db.backends': {
         #     'handlers': ['console'],
         #     'level': 'DEBUG',
@@ -143,7 +138,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -156,7 +150,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -178,11 +171,11 @@ from celery.schedules import crontab
 
 CELERY_BEAT_SCHEDULE = {
     'update_secret_instances': {
-        'task': 'mysite.tasks.update_secret_instances',
-        'schedule': crontab(minute=0, hour='*/12'),   # 每12小时执行
+        'task': 'demoapp.tasks.update_password_instances',
+        'schedule': crontab(minute=0, hour='*/12'),  # 每12小时执行
     },
     'statistics_instances': {
-        'task': 'mysite.tasks.statistics_instances',
-        'schedule': crontab(minute=0, hour=0),      # 每天00:00执行
+        'task': 'demoapp.tasks.statistics_instances',
+        'schedule': crontab(minute=0, hour=0),  # 每天00:00执行
     },
 }
